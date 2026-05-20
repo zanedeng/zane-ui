@@ -3543,6 +3543,60 @@ export namespace Components {
         "visible": boolean;
         "wrapperClass": string;
     }
+    interface ZaneWatermark {
+        /**
+          * @default 'zane-ui'
+         */
+        "content": string | string[];
+        /**
+          * @default 'var(--zane-text-color-disabled)'
+         */
+        "fontColor": string;
+        /**
+          * @default 'sans-serif'
+         */
+        "fontFamily": string;
+        /**
+          * @default 3
+         */
+        "fontGap": number;
+        /**
+          * @default 16
+         */
+        "fontSize": number;
+        /**
+          * @default 'normal'
+         */
+        "fontStyle": string;
+        /**
+          * @default 'normal'
+         */
+        "fontWeight": string;
+        /**
+          * @default '100,100'
+         */
+        "gap": string;
+        "height"?: number;
+        "image"?: string;
+        "offset"?: string;
+        /**
+          * @default -22
+         */
+        "rotate": number;
+        /**
+          * @default 'center'
+         */
+        "textAlign": CanvasTextAlign;
+        /**
+          * @default 'hanging'
+         */
+        "textBaseline": CanvasTextBaseline;
+        "width"?: number;
+        /**
+          * @default 9
+         */
+        "zIndex": number;
+    }
 }
 export interface ZaneA2uiCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -5200,6 +5254,12 @@ declare global {
         prototype: HTMLZaneVirtualScrollbarElement;
         new (): HTMLZaneVirtualScrollbarElement;
     };
+    interface HTMLZaneWatermarkElement extends Components.ZaneWatermark, HTMLStencilElement {
+    }
+    var HTMLZaneWatermarkElement: {
+        prototype: HTMLZaneWatermarkElement;
+        new (): HTMLZaneWatermarkElement;
+    };
     interface HTMLElementTagNameMap {
         "zane-a2ui": HTMLZaneA2uiElement;
         "zane-aside": HTMLZaneAsideElement;
@@ -5301,6 +5361,7 @@ declare global {
         "zane-virtual-grid": HTMLZaneVirtualGridElement;
         "zane-virtual-list": HTMLZaneVirtualListElement;
         "zane-virtual-scrollbar": HTMLZaneVirtualScrollbarElement;
+        "zane-watermark": HTMLZaneWatermarkElement;
     }
 }
 declare namespace LocalJSX {
@@ -8952,6 +9013,60 @@ declare namespace LocalJSX {
         "visible"?: boolean;
         "wrapperClass"?: string;
     }
+    interface ZaneWatermark {
+        /**
+          * @default 'zane-ui'
+         */
+        "content"?: string | string[];
+        /**
+          * @default 'var(--zane-text-color-disabled)'
+         */
+        "fontColor"?: string;
+        /**
+          * @default 'sans-serif'
+         */
+        "fontFamily"?: string;
+        /**
+          * @default 3
+         */
+        "fontGap"?: number;
+        /**
+          * @default 16
+         */
+        "fontSize"?: number;
+        /**
+          * @default 'normal'
+         */
+        "fontStyle"?: string;
+        /**
+          * @default 'normal'
+         */
+        "fontWeight"?: string;
+        /**
+          * @default '100,100'
+         */
+        "gap"?: string;
+        "height"?: number;
+        "image"?: string;
+        "offset"?: string;
+        /**
+          * @default -22
+         */
+        "rotate"?: number;
+        /**
+          * @default 'center'
+         */
+        "textAlign"?: CanvasTextAlign;
+        /**
+          * @default 'hanging'
+         */
+        "textBaseline"?: CanvasTextBaseline;
+        "width"?: number;
+        /**
+          * @default 9
+         */
+        "zIndex"?: number;
+    }
     interface IntrinsicElements {
         "zane-a2ui": ZaneA2ui;
         "zane-aside": ZaneAside;
@@ -9053,6 +9168,7 @@ declare namespace LocalJSX {
         "zane-virtual-grid": ZaneVirtualGrid;
         "zane-virtual-list": ZaneVirtualList;
         "zane-virtual-scrollbar": ZaneVirtualScrollbar;
+        "zane-watermark": ZaneWatermark;
     }
 }
 export { LocalJSX as JSX };
@@ -9159,6 +9275,7 @@ declare module "@stencil/core" {
             "zane-virtual-grid": LocalJSX.ZaneVirtualGrid & JSXBase.HTMLAttributes<HTMLZaneVirtualGridElement>;
             "zane-virtual-list": LocalJSX.ZaneVirtualList & JSXBase.HTMLAttributes<HTMLZaneVirtualListElement>;
             "zane-virtual-scrollbar": LocalJSX.ZaneVirtualScrollbar & JSXBase.HTMLAttributes<HTMLZaneVirtualScrollbarElement>;
+            "zane-watermark": LocalJSX.ZaneWatermark & JSXBase.HTMLAttributes<HTMLZaneWatermarkElement>;
         }
     }
 }

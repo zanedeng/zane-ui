@@ -1,0 +1,6 @@
+@use '../../styles/mixins/function' as *;
+@use '../../styles/mixins/bem' as *;
+
+@include b(watermark) {
+  // All styling is inline - no SCSS rules needed
+}

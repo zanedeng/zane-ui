@@ -52,7 +52,80 @@
 </head>
 
 <body>
-  <!-- Page Header 页头 -->
+   <!-- Watermark 水印 -->
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h3 style="margin: 0 0 16px; font-size: 18px;">Watermark 水印</h3>
+    <div style="padding: 12px; margin-bottom: 16px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4 style="margin-bottom: 16px;">基础用法</h4>
+      <zane-watermark content="zane-ui" style="height: 200px; display: flex; align-items: center; justify-content: center; background: var(--zane-bg-color-blank);">
+        <div style="text-align: center;">
+          <p style="font-size: 16px; font-weight: 500;">这是一个带水印的容器</p>
+          <p style="font-size: 13px; color: var(--zane-text-color-secondary);">水印内容为 "zane-ui"</p>
+        </div> 
+      </zane-watermark>
+    </div>
+    <div style="padding: 12px; margin-bottom: 16px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4 style="margin-bottom: 16px;">多行水印</h4>
+      <zane-watermark content='["Element+","Element Plus"]' font-size="16" style="height: 300px; display: flex; align-items: center; justify-content: center; background: var(--zane-bg-color-blank);">
+        <div style="text-align: center;">
+          <p style="font-size: 16px; font-weight: 500;">多行间距水印</p>
+          <p style="font-size: 13px; color: var(--zane-text-color-secondary);">水印内容为 "Element+" 和 "Element Plus" 两行</p>
+        </div>
+      </zane-watermark>
+    </div>
+    <div style="padding: 12px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4 style="margin-bottom: 16px;">自定义配置</h4>
+      <div style="display: flex; gap: 24px;">
+        <div style="flex: 1; min-width: 0;">
+          <zane-watermark id="watermark-custom" content="zane-ui" font-color="rgba(255,255,255,.12)" font-size="16" z-index="9" rotate="-22" gap="[100,100]" offset="[50,50]" style="height: 400px; display: flex; align-items: center; justify-content: center; background: var(--zane-bg-color-blank); border: 1px solid var(--zane-border-color-lighter); border-radius: 4px;">
+            <div style="text-align: center; color: var(--zane-text-color-secondary); font-size: 14px; position: relative; z-index: 5;">
+              Watermark Preview
+            </div>
+          </zane-watermark>
+        </div>
+        <div style="width: 320px;">
+          <div style="display: flex; flex-direction: column; gap: 14px; font-size: 13px;">
+            <div>
+              <label style="display: block; margin-bottom: 6px; color: var(--zane-text-color-secondary);">Content</label>
+              <zane-input id="wm-content" value="zane-ui" />
+            </div>
+            <div>
+              <label style="display: block; margin-bottom: 6px; color: var(--zane-text-color-secondary);">Color</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <zane-input id="wm-color" value="rgba(255,255,255,.12)" style="flex: 1;" />
+                <input id="wm-color-picker" type="color" value="#000000" style="width: 32px; height: 32px; padding: 0; border: 1px solid var(--zane-border-color); border-radius: 4px; cursor: pointer; flex-shrink: 0;" />
+              </div>
+            </div>
+            <div style="contain: layout;">
+              <label style="display: block; margin-bottom: 6px; color: var(--zane-text-color-secondary);" id="wm-font-size-label">FontSize: <span id="wm-font-size-val">16</span></label>
+              <zane-slider id="wm-font-size" style="position: relative;" min="12" max="48" value="16" aria-labelledby="wm-font-size-label" />
+            </div>
+            <div style="contain: layout;">
+              <label style="display: block; margin-bottom: 6px; color: var(--zane-text-color-secondary);" id="wm-zindex-label">zIndex: <span id="wm-zindex-val">9</span></label>
+              <zane-slider id="wm-zindex" style="position: relative;" min="-1" max="10" value="9" aria-labelledby="wm-zindex-label" />
+            </div>
+            <div style="contain: layout;">
+              <label style="display: block; margin-bottom: 6px; color: var(--zane-text-color-secondary);" id="wm-rotate-label">Rotate: <span id="wm-rotate-val">-22</span></label>
+              <zane-slider id="wm-rotate" style="position: relative;" min="-180" max="180" value="-22" aria-labelledby="wm-rotate-label" />
+            </div>
+            <div>
+              <label style="display: block; margin-bottom: 6px; color: var(--zane-text-color-secondary);">Gap</label>
+              <zane-space size="small" style="width: 100%;">
+                <zane-input-number id="wm-gap-x" value="100" min="0" style="flex: 1;" />
+                <zane-input-number id="wm-gap-y" value="100" min="0" style="flex: 1;" />
+              </zane-space>
+            </div>
+            <div>
+              <label style="display: block; margin-bottom: 6px; color: var(--zane-text-color-secondary);">Offset</label>
+              <zane-space size="small" style="width: 100%;">
+                <zane-input-number id="wm-offset-x" value="50" min="0" style="flex: 1;" />
+                <zane-input-number id="wm-offset-y" value="50" min="0" style="flex: 1;" />
+              </zane-space>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
     <h3 style="margin: 0 0 16px; font-size: 18px;">Page Header 页头</h3>
 
@@ -559,7 +632,6 @@
     <zane-input-number value="1" min="1" max="10" precision="2" step="0.1"
       controls-position="right"></zane-input-number>
   </div>
-
   <script>
     // ------ start segmented ----------------------------------
     var segmentedCustomProps = document.querySelector('#segmented-custom-props')
@@ -1052,7 +1124,88 @@
       });
     }
 
-    // ---- start pagination ------------------
+    // ---- start watermark custom config demo ----
+(function () {
+  var wm = document.querySelector('#watermark-custom');
+  if (!wm) return;
+
+  var contentInput = document.querySelector('#wm-content');
+  var colorInput = document.querySelector('#wm-color');
+  var colorPicker = document.querySelector('#wm-color-picker');
+  var fontSizeSlider = document.querySelector('#wm-font-size');
+  var fontSizeVal = document.querySelector('#wm-font-size-val');
+  var zindexSlider = document.querySelector('#wm-zindex');
+  var zindexVal = document.querySelector('#wm-zindex-val');
+  var rotateSlider = document.querySelector('#wm-rotate');
+  var rotateVal = document.querySelector('#wm-rotate-val');
+  var gapXInput = document.querySelector('#wm-gap-x');
+  var gapYInput = document.querySelector('#wm-gap-y');
+  var offsetXInput = document.querySelector('#wm-offset-x');
+  var offsetYInput = document.querySelector('#wm-offset-y');
+
+  function readValue(el) {
+    if (el.tagName === 'ZANE-INPUT') return el.value;
+    if (el.tagName === 'ZANE-SLIDER') return el.value;
+    if (el.tagName === 'ZANE-INPUT-NUMBER') return el.value;
+    return el.value;
+  }
+
+  function updateWatermark() {
+    wm.content = readValue(contentInput);
+    wm.fontColor = readValue(colorInput);
+    wm.fontSize = Number(readValue(fontSizeSlider));
+    wm.zIndex = Number(readValue(zindexSlider));
+    wm.rotate = Number(readValue(rotateSlider));
+    wm.gap = '[' + Number(readValue(gapXInput)) + ',' + Number(readValue(gapYInput)) + ']';
+    wm.offset = '[' + Number(readValue(offsetXInput)) + ',' + Number(readValue(offsetYInput)) + ']';
+  }
+
+  contentInput.addEventListener('zInput', function (e) {
+    wm.content = e.detail;
+  });
+
+  colorInput.addEventListener('zInput', function (e) {
+    wm.fontColor = e.detail;
+  });
+  colorPicker.addEventListener('input', function () {
+    var hex = colorPicker.value;
+    var r = parseInt(hex.slice(1, 3), 16);
+    var g = parseInt(hex.slice(3, 5), 16);
+    var b = parseInt(hex.slice(5, 7), 16);
+    colorInput.value = 'rgba(' + r + ',' + g + ',' + b + ',.15)';
+    wm.fontColor = colorInput.value;
+  });
+
+  fontSizeSlider.addEventListener('zInput', function (e) {
+    fontSizeVal.textContent = e.detail;
+    wm.fontSize = e.detail;
+  });
+
+  zindexSlider.addEventListener('zInput', function (e) {
+    zindexVal.textContent = e.detail;
+    wm.zIndex = e.detail;
+  });
+
+  rotateSlider.addEventListener('zInput', function (e) {
+    rotateVal.textContent = e.detail;
+    wm.rotate = e.detail;
+  });
+
+  gapXInput.addEventListener('zChange', function (e) {
+    wm.gap = '[' + e.detail + ',' + readValue(gapYInput) + ']';
+  });
+  gapYInput.addEventListener('zChange', function (e) {
+    wm.gap = '[' + readValue(gapXInput) + ',' + e.detail + ']';
+  });
+  offsetXInput.addEventListener('zChange', function (e) {
+    wm.offset = '[' + e.detail + ',' + readValue(offsetYInput) + ']';
+  });
+  offsetYInput.addEventListener('zChange', function (e) {
+    wm.offset = '[' + readValue(offsetXInput) + ',' + e.detail + ']';
+  });
+})();
+
+// ---- start pagination ------------------
     var pagination04El = document.querySelector('#pagination04');
     var paginationLog = document.querySelector('#pagination-log');
     if (pagination04El && paginationLog) {

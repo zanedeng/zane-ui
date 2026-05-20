@@ -381,6 +381,9 @@ export class ZaneSlider {
     this.formItemContext = getFormItemContext(this.el);
     this.configProviderContext = getConfigProviderContext(this.el);
 
+    if (!this.range && typeof this.value === 'number') {
+      this.firstValue = this.value;
+    }
     this.handleWatchId();
     this.handleUpdateDisabled();
     this.handleUpdateSize();
