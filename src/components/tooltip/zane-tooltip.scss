@@ -1,0 +1,56 @@
+@use '../../styles/config' as *;
+@use '../../styles/mixins/bem' as *;
+@use '../../styles/mixins/function' as *;
+@use '../../styles/mixins/var' as *;
+
+// tippy.js core styles
+@import '../../../node_modules/tippy.js/dist/tippy.css';
+@import '../../../node_modules/tippy.js/dist/backdrop.css';
+@import '../../../node_modules/tippy.js/dist/svg-arrow.css';
+
+$tooltip: (
+  'padding': 8px 12px,
+  'font-size': getCssVar('font-size', 'small'),
+  'border-radius': getCssVar('border-radius', 'base'),
+  'box-shadow': getCssVar('box-shadow', 'light'),
+  'border-color': getCssVar('border-color'),
+);
+
+@include b(tooltip) {
+  @include set-component-css-var('tooltip', $tooltip);
+}
+
+.zane-tooltip__popper {
+  padding: getCssVar('tooltip', 'padding');
+  font-size: getCssVar('tooltip', 'font-size');
+  border-radius: getCssVar('tooltip', 'border-radius');
+  word-break: break-all;
+  line-height: 1.4;
+  box-shadow: getCssVar('tooltip', 'box-shadow');
+
+  .zane-tooltip__content {
+    max-width: 100%;
+  }
+
+  // dark effect (default)
+  &[data-theme~='dark'] {
+    background-color: getCssVar('color', 'info', 'dark-2');
+    color: getCssVar('color', 'white');
+    border: none;
+
+    .tippy-arrow {
+      color: getCssVar('color', 'info', 'dark-2');
+    }
+  }
+
+  // light effect
+  &[data-theme~='light'] {
+    background-color: getCssVar('color', 'white');
+    color: getCssVar('text-color', 'regular');
+    border: 1px solid getCssVar('tooltip', 'border-color');
+
+    .tippy-arrow {
+      color: getCssVar('color', 'white');
+    }
+  }
+}

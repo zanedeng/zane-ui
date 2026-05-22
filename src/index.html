@@ -48,10 +48,212 @@
     .slider-demo-block .demonstration+zane-slider {
       flex: 0 0 70%;
     }
+
+    .tippy-box[data-theme~='customized'] {
+      padding: 6px 12px;
+      background: linear-gradient(90deg, rgb(159, 229, 151), rgb(204, 229, 129));
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    .tippy-box[data-theme~='customized'] > .tippy-arrow {
+      color: #b2e68d;
+    }
+
+    .tippy-box[data-theme~='customized'][data-placement^='top'] > .tippy-arrow::before {
+      border-top-color: #b2e68d;
+    }
+
+    .tippy-box[data-theme~='customized'][data-placement^='bottom'] > .tippy-arrow::before {
+      border-bottom-color: #b2e68d;
+    }
+
+    .tippy-box[data-theme~='customized'][data-placement^='left'] > .tippy-arrow::before {
+      border-left-color: #b2e68d;
+    }
+
+    .tippy-box[data-theme~='customized'][data-placement^='right'] > .tippy-arrow::before {
+      border-right-color: #b2e68d;
+    }
   </style>
 </head>
 
 <body>
+    <!-- Tooltip 提示 -->
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h3 style="margin: 0; font-size: 18px; display: flex; align-items: center; gap: 8px; cursor: pointer;" onclick="toggleTooltipDemo()">
+      Tooltip 提示
+      <zane-icon id="tooltip-toggle-icon" name="arrow-drop-right-line" size="16" style="transition: transform 0.3s;"></zane-icon>
+    </h3>
+    <div id="tooltip-demo-content" style="display: none; margin-top: 16px;">
+    <!-- 基础用法：12 个方向 placement -->
+    <div style="padding: 12px; margin-bottom: 16px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4 style="margin-bottom: 16px;">基础用法（12 个方向）</h4>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <zane-tooltip content="Top Start 提示信息" placement="top-start">
+            <zane-button>top-start</zane-button>
+          </zane-tooltip>
+          <zane-tooltip content="Top Center 提示信息" placement="top">
+            <zane-button>top</zane-button>
+          </zane-tooltip>
+          <zane-tooltip content="Top End 提示信息" placement="top-end">
+            <zane-button>top-end</zane-button>
+          </zane-tooltip>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center; width: 100%;">
+          <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start; flex: 1;">
+            <zane-tooltip content="Left Start 提示信息" placement="left-start">
+              <zane-button>left-start</zane-button>
+            </zane-tooltip>
+            <zane-tooltip content="Left Center 提示信息" placement="left">
+              <zane-button>left</zane-button>
+            </zane-tooltip>
+            <zane-tooltip content="Left End 提示信息" placement="left-end">
+              <zane-button>left-end</zane-button>
+            </zane-tooltip>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end; flex: 1;">
+            <zane-tooltip content="Right Start 提示信息" placement="right-start">
+              <zane-button>right-start</zane-button>
+            </zane-tooltip>
+            <zane-tooltip content="Right Center 提示信息" placement="right">
+              <zane-button>right</zane-button>
+            </zane-tooltip>
+            <zane-tooltip content="Right End 提示信息" placement="right-end">
+              <zane-button>right-end</zane-button>
+            </zane-tooltip>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <zane-tooltip content="Bottom Start 提示信息" placement="bottom-start">
+            <zane-button>bottom-start</zane-button>
+          </zane-tooltip>
+          <zane-tooltip content="Bottom Center 提示信息" placement="bottom">
+            <zane-button>bottom</zane-button>
+          </zane-tooltip>
+          <zane-tooltip content="Bottom End 提示信息" placement="bottom-end">
+            <zane-button>bottom-end</zane-button>
+          </zane-tooltip>
+        </div>
+      </div>
+    </div>
+
+    <!-- 不同主题 -->
+    <div style="padding: 12px; margin-bottom: 16px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4 style="margin-bottom: 16px;">不同主题（effect）</h4>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <zane-tooltip content="Dark 主题（默认）" placement="top" effect="dark">
+          <zane-button>Dark</zane-button>
+        </zane-tooltip>
+        <zane-tooltip content="Light 主题" placement="top" effect="light">
+          <zane-button>Light</zane-button>
+        </zane-tooltip>
+        <zane-tooltip content="Bottom center" placement="bottom" effect="customized">
+          <zane-button>Customized theme</zane-button>
+        </zane-tooltip>
+      </div>
+    </div>
+
+    <!-- 触发方式 -->
+    <div style="padding: 12px; margin-bottom: 16px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4 style="margin-bottom: 16px;">触发方式（trigger）</h4>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+        <zane-tooltip content="Hover 触发（默认）" placement="top" trigger="hover">
+          <zane-button>Hover</zane-button>
+        </zane-tooltip>
+        <zane-tooltip content="Click 触发" placement="top" trigger="click">
+          <zane-button>Click</zane-button>
+        </zane-tooltip>
+        <zane-tooltip content="聚焦输入框时显示提示" placement="top" trigger="focus">
+          <zane-input placeholder="点击聚焦试试" style="width: 180px;"></zane-input>
+        </zane-tooltip>
+        <zane-tooltip content="右键触发" placement="top" trigger="contextmenu">
+          <zane-button>Context Menu</zane-button>
+        </zane-tooltip>
+      </div>
+    </div>
+
+    <!-- 丰富内容 -->
+    <div style="padding: 12px; margin-bottom: 16px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4 style="margin-bottom: 16px;">丰富内容（slot="content"）</h4>
+      <zane-tooltip placement="right" effect="light">
+        <zane-button>Hover me</zane-button>
+        <div slot="content" style="display: flex; flex-direction: column; gap: 8px; padding: 4px 0;">
+          <div style="font-weight: 600; font-size: 14px;">多行内容</div>
+          <div style="font-size: 12px; color: var(--zane-text-color-secondary);">这是使用 slot 自定义的</div>
+          <div style="font-size: 12px; color: var(--zane-text-color-secondary);">富文本 tooltip 内容</div>
+          <zane-button size="small" type="primary">操作按钮</zane-button>
+        </div>
+      </zane-tooltip>
+    </div>
+
+    <!-- HTML 内容 -->
+    <div style="padding: 12px; margin-bottom: 16px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4 style="margin-bottom: 16px;">HTML 内容（raw-content）</h4>
+      <zane-tooltip content="<strong>粗体文字</strong> 和 <em>斜体文字</em>" raw-content placement="top">
+        <zane-button>HTML Content</zane-button>
+      </zane-tooltip>
+    </div>
+
+    <!-- 禁用状态 -->
+    <div style="padding: 12px; margin-bottom: 16px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4 style="margin-bottom: 16px;">禁用状态（disabled）</h4>
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <zane-tooltip id="tooltip-disabled" content="Tooltip 内容" placement="top">
+          <zane-button id="tooltip-disabled-btn">点击禁用 Tooltip</zane-button>
+        </zane-tooltip>
+      </div>
+    </div>
+
+    <!-- 箭头与偏移 -->
+    <div style="padding: 12px; margin-bottom: 16px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4 style="margin-bottom: 16px;">箭头与偏移（show-arrow / offset）</h4>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+        <zane-tooltip content="带箭头（默认）" placement="top" show-arrow>
+          <zane-button>有箭头</zane-button>
+        </zane-tooltip>
+        <zane-tooltip content="无箭头" placement="top" show-arrow="false">
+          <zane-button>无箭头</zane-button>
+        </zane-tooltip>
+        <zane-tooltip content="偏移量 40px" placement="top" offset="[0,40]">
+          <zane-button>大偏移</zane-button>
+        </zane-tooltip>
+      </div>
+    </div>
+
+    <!-- 延迟控制 -->
+    <div style="padding: 12px; margin-bottom: 16px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4 style="margin-bottom: 16px;">延迟控制（show-after / hide-after）</h4>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+        <zane-tooltip content="500ms 后显示" placement="top" show-after="500">
+          <zane-button>慢显示</zane-button>
+        </zane-tooltip>
+        <zane-tooltip content="500ms 后隐藏" placement="top" hide-after="500">
+          <zane-button>慢隐藏</zane-button>
+        </zane-tooltip>
+        <zane-tooltip id="tooltip-autoclose" content="打开 2 秒后自动关闭" placement="top" auto-close="2000">
+          <zane-button>自动关闭</zane-button>
+        </zane-tooltip>
+      </div>
+    </div>
+
+    <!-- 受控模式 -->
+    <div style="padding: 12px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4 style="margin-bottom: 16px;">受控模式（visible）</h4>
+      <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+        <zane-button id="tooltip-ctrl-show" type="primary">显示 Tooltip</zane-button>
+        <zane-button id="tooltip-ctrl-hide" type="danger">隐藏 Tooltip</zane-button>
+        <span style="font-size: 13px; color: var(--zane-text-color-secondary);">点击按钮控制 Tooltip 显隐</span>
+        <div style="width: 100%; margin-top: 8px;">
+          <zane-tooltip id="tooltip-ctrl" content="我是一个受控 Tooltip" placement="right" effect="light">
+            <zane-button>受控 Tooltip（hover 无效）</zane-button>
+          </zane-tooltip>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
    <!-- Watermark 水印 -->
   <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
     <h3 style="margin: 0 0 16px; font-size: 18px;">Watermark 水印</h3>
@@ -633,6 +835,18 @@
       controls-position="right"></zane-input-number>
   </div>
   <script>
+    function toggleTooltipDemo() {
+      const content = document.getElementById('tooltip-demo-content');
+      const icon = document.getElementById('tooltip-toggle-icon');
+      if (content.style.display === 'none') {
+        content.style.display = '';
+        icon.style.transform = 'rotate(90deg)';
+      } else {
+        content.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+      }
+    }
+
     // ------ start segmented ----------------------------------
     var segmentedCustomProps = document.querySelector('#segmented-custom-props')
     if (segmentedCustomProps) {
@@ -1412,6 +1626,38 @@
         console.log('关闭全部================')
         Notify.closeAll();
       });
+    })();
+
+    // ---- start tooltip demo ----
+    (function () {
+      var tooltipDisabled = document.querySelector('#tooltip-disabled');
+      var tooltipDisabledBtn = document.querySelector('#tooltip-disabled-btn');
+      if (tooltipDisabled && tooltipDisabledBtn) {
+        var disabled = false;
+        tooltipDisabledBtn.addEventListener('click', function () {
+          disabled = !disabled;
+          tooltipDisabled.disabled = disabled;
+          tooltipDisabledBtn.textContent = disabled ? '已禁用，点击启用' : '点击禁用 Tooltip';
+        });
+      }
+
+      var tooltipCtrl = document.querySelector('#tooltip-ctrl');
+      var showBtn = document.querySelector('#tooltip-ctrl-show');
+      var hideBtn = document.querySelector('#tooltip-ctrl-hide');
+      if (tooltipCtrl && showBtn && hideBtn) {
+        var visible = false;
+        showBtn.addEventListener('click', function () {
+          visible = true;
+          tooltipCtrl.visible = visible;
+        });
+        hideBtn.addEventListener('click', function () {
+          visible = false;
+          tooltipCtrl.visible = visible;
+        });
+        tooltipCtrl.addEventListener('zVisibleChange', function (e) {
+          visible = e.detail;
+        });
+      }
     })();
   </script>
 

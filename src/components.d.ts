@@ -39,6 +39,7 @@ import { SliderContext } from "./components/slider/types";
 import { SplitterRootContext } from "./components/splitter/types";
 import { TimelineMode } from "./components/timeline/zane-timeline";
 import { TimelineItemPlacement, TimelineItemSize, TimelineItemType } from "./components/timeline/zane-timeline-item";
+import { TooltipTriggerType } from "./components/tooltip/types";
 import { TransferDataItem, TransferDirection, TransferFormat, TransferKey, TransferPropsAlias } from "./components/transfer/types";
 import { CheckedInfo, FilterMethod, TreeContext, TreeData, TreeKey, TreeNode, TreeNodeData, TreeOptionProps } from "./components/tree/types";
 import { FilterMethod as FilterMethod1, TagTooltipProps as TagTooltipProps1, TreeData as TreeData1, TreeKey as TreeKey1, TreeNode as TreeNode1, TreeNodeData as TreeNodeData1, TreeSelectOptionProps, TreeSelectOptionValue } from "./components/tree-select/types";
@@ -78,6 +79,7 @@ export { SliderContext } from "./components/slider/types";
 export { SplitterRootContext } from "./components/splitter/types";
 export { TimelineMode } from "./components/timeline/zane-timeline";
 export { TimelineItemPlacement, TimelineItemSize, TimelineItemType } from "./components/timeline/zane-timeline-item";
+export { TooltipTriggerType } from "./components/tooltip/types";
 export { TransferDataItem, TransferDirection, TransferFormat, TransferKey, TransferPropsAlias } from "./components/transfer/types";
 export { CheckedInfo, FilterMethod, TreeContext, TreeData, TreeKey, TreeNode, TreeNodeData, TreeOptionProps } from "./components/tree/types";
 export { FilterMethod as FilterMethod1, TagTooltipProps as TagTooltipProps1, TreeData as TreeData1, TreeKey as TreeKey1, TreeNode as TreeNode1, TreeNodeData as TreeNodeData1, TreeSelectOptionProps, TreeSelectOptionValue } from "./components/tree-select/types";
@@ -2904,6 +2906,83 @@ export namespace Components {
          */
         "showText": string;
     }
+    interface ZaneTooltip {
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.appendTo
+         */
+        "appendTo": HTMLElement | 'parent' | ((ref: Element) => Element);
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.autoClose
+         */
+        "autoClose": number;
+        "content"?: string;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.disabled
+         */
+        "disabled": boolean;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.effect
+         */
+        "effect": string;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.enterable
+         */
+        "enterable": boolean;
+        "hide": () => Promise<void>;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.hideAfter
+         */
+        "hideAfter": number;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.hideOnClick
+         */
+        "hideOnClick": boolean;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.maxWidth
+         */
+        "maxWidth": number | string;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.offset
+         */
+        "offset": string | [number, number];
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.placement
+         */
+        "placement": string;
+        "popperClass"?: string;
+        "popperStyle"?: Record<string, any>;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.rawContent
+         */
+        "rawContent": boolean;
+        "show": () => Promise<void>;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.showAfter
+         */
+        "showAfter": number;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.showArrow
+         */
+        "showArrow": boolean;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.teleported
+         */
+        "teleported": boolean;
+        "toggle": () => Promise<void>;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.transition
+         */
+        "transition": string;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.trigger
+         */
+        "trigger": TooltipTriggerType | TooltipTriggerType[];
+        "visible"?: boolean;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.zIndex
+         */
+        "zIndex": number;
+    }
     interface ZaneTransfer {
         /**
           * @default [] as unknown as [string, string]
@@ -3769,6 +3848,10 @@ export interface ZaneTippyCustomEvent<T> extends CustomEvent<T> {
 export interface ZaneTodoListCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLZaneTodoListElement;
+}
+export interface ZaneTooltipCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLZaneTooltipElement;
 }
 export interface ZaneTransferCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4951,6 +5034,27 @@ declare global {
         prototype: HTMLZaneTodoListElement;
         new (): HTMLZaneTodoListElement;
     };
+    interface HTMLZaneTooltipElementEventMap {
+        "zBeforeShow": void;
+        "zShow": void;
+        "zBeforeHide": void;
+        "zHide": void;
+        "zVisibleChange": boolean;
+    }
+    interface HTMLZaneTooltipElement extends Components.ZaneTooltip, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLZaneTooltipElementEventMap>(type: K, listener: (this: HTMLZaneTooltipElement, ev: ZaneTooltipCustomEvent<HTMLZaneTooltipElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLZaneTooltipElementEventMap>(type: K, listener: (this: HTMLZaneTooltipElement, ev: ZaneTooltipCustomEvent<HTMLZaneTooltipElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLZaneTooltipElement: {
+        prototype: HTMLZaneTooltipElement;
+        new (): HTMLZaneTooltipElement;
+    };
     interface HTMLZaneTransferElementEventMap {
         "zChange": {
     value: TransferKey[];
@@ -5351,6 +5455,7 @@ declare global {
         "zane-timeline-item": HTMLZaneTimelineItemElement;
         "zane-tippy": HTMLZaneTippyElement;
         "zane-todo-list": HTMLZaneTodoListElement;
+        "zane-tooltip": HTMLZaneTooltipElement;
         "zane-transfer": HTMLZaneTransferElement;
         "zane-transfer-panel": HTMLZaneTransferPanelElement;
         "zane-tree": HTMLZaneTreeElement;
@@ -8268,6 +8373,85 @@ declare namespace LocalJSX {
          */
         "showText"?: string;
     }
+    interface ZaneTooltip {
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.appendTo
+         */
+        "appendTo"?: HTMLElement | 'parent' | ((ref: Element) => Element);
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.autoClose
+         */
+        "autoClose"?: number;
+        "content"?: string;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.effect
+         */
+        "effect"?: string;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.enterable
+         */
+        "enterable"?: boolean;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.hideAfter
+         */
+        "hideAfter"?: number;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.hideOnClick
+         */
+        "hideOnClick"?: boolean;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.maxWidth
+         */
+        "maxWidth"?: number | string;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.offset
+         */
+        "offset"?: string | [number, number];
+        "onZBeforeHide"?: (event: ZaneTooltipCustomEvent<void>) => void;
+        "onZBeforeShow"?: (event: ZaneTooltipCustomEvent<void>) => void;
+        "onZHide"?: (event: ZaneTooltipCustomEvent<void>) => void;
+        "onZShow"?: (event: ZaneTooltipCustomEvent<void>) => void;
+        "onZVisibleChange"?: (event: ZaneTooltipCustomEvent<boolean>) => void;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.placement
+         */
+        "placement"?: string;
+        "popperClass"?: string;
+        "popperStyle"?: Record<string, any>;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.rawContent
+         */
+        "rawContent"?: boolean;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.showAfter
+         */
+        "showAfter"?: number;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.showArrow
+         */
+        "showArrow"?: boolean;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.teleported
+         */
+        "teleported"?: boolean;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.transition
+         */
+        "transition"?: string;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.trigger
+         */
+        "trigger"?: TooltipTriggerType | TooltipTriggerType[];
+        "visible"?: boolean;
+        /**
+          * @default TOOLTIP_OPTIONS_DEFAULTS.zIndex
+         */
+        "zIndex"?: number;
+    }
     interface ZaneTransfer {
         /**
           * @default [] as unknown as [string, string]
@@ -9158,6 +9342,7 @@ declare namespace LocalJSX {
         "zane-timeline-item": ZaneTimelineItem;
         "zane-tippy": ZaneTippy;
         "zane-todo-list": ZaneTodoList;
+        "zane-tooltip": ZaneTooltip;
         "zane-transfer": ZaneTransfer;
         "zane-transfer-panel": ZaneTransferPanel;
         "zane-tree": ZaneTree;
@@ -9265,6 +9450,7 @@ declare module "@stencil/core" {
             "zane-timeline-item": LocalJSX.ZaneTimelineItem & JSXBase.HTMLAttributes<HTMLZaneTimelineItemElement>;
             "zane-tippy": LocalJSX.ZaneTippy & JSXBase.HTMLAttributes<HTMLZaneTippyElement>;
             "zane-todo-list": LocalJSX.ZaneTodoList & JSXBase.HTMLAttributes<HTMLZaneTodoListElement>;
+            "zane-tooltip": LocalJSX.ZaneTooltip & JSXBase.HTMLAttributes<HTMLZaneTooltipElement>;
             "zane-transfer": LocalJSX.ZaneTransfer & JSXBase.HTMLAttributes<HTMLZaneTransferElement>;
             "zane-transfer-panel": LocalJSX.ZaneTransferPanel & JSXBase.HTMLAttributes<HTMLZaneTransferPanelElement>;
             "zane-tree": LocalJSX.ZaneTree & JSXBase.HTMLAttributes<HTMLZaneTreeElement>;

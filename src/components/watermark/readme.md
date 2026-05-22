@@ -7,24 +7,24 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                                                     | Type                                   | Default                            |
-| -------------- | --------------- | --------------------------------------------------------------- | -------------------------------------- | ---------------------------------- |
-| `zIndex`       | `z-index`       | z-index of the watermark overlay                                | `number`                               | `9`                                |
-| `rotate`       | `rotate`        | Rotation angle in degrees                                       | `number`                               | `-22`                              |
-| `width`        | `width`         | Tile width (auto if not set)                                    | `number \| undefined`                  | `undefined`                        |
-| `height`       | `height`        | Tile height (auto if not set)                                   | `number \| undefined`                  | `undefined`                        |
-| `image`        | `image`         | Image URL (takes priority over `content`)                       | `string \| undefined`                  | `undefined`                        |
-| `content`      | `content`       | Watermark text or array of lines (supports `\n` or JSON array)  | `string \| string[]`                   | `'zane-ui'`                        |
-| `fontColor`    | `font-color`    | Watermark font color                                            | `string`                               | `'var(--zane-text-color-disabled)'`|
-| `fontSize`     | `font-size`     | Font size in px                                                 | `number`                               | `16`                               |
-| `fontWeight`   | `font-weight`   | Font weight                                                     | `string`                               | `'normal'`                         |
-| `fontStyle`    | `font-style`    | Font style                                                      | `string`                               | `'normal'`                         |
-| `fontFamily`   | `font-family`   | Font family                                                     | `string`                               | `'sans-serif'`                     |
-| `textAlign`    | `text-align`    | Canvas textAlign value                                          | `CanvasTextAlign`                       | `'center'`                         |
-| `textBaseline` | `text-baseline` | Canvas textBaseline value                                       | `CanvasTextBaseline`                   | `'hanging'`                        |
-| `fontGap`      | `font-gap`      | Gap between multi-line text                                     | `number`                               | `3`                                |
-| `gap`          | `gap`           | Tile spacing as JSON array string e.g. `'[100,100]'`           | `string`                               | `'100,100'`                        |
-| `offset`       | `offset`        | First tile offset as JSON array string e.g. `'[50,50]'`        | `string \| undefined`                  | `undefined`                        |
+| Property       | Attribute       | Description | Type                                                                          | Default                             |
+| -------------- | --------------- | ----------- | ----------------------------------------------------------------------------- | ----------------------------------- |
+| `content`      | `content`       |             | `string \| string[]`                                                          | `'zane-ui'`                         |
+| `fontColor`    | `font-color`    |             | `string`                                                                      | `'var(--zane-text-color-disabled)'` |
+| `fontFamily`   | `font-family`   |             | `string`                                                                      | `'sans-serif'`                      |
+| `fontGap`      | `font-gap`      |             | `number`                                                                      | `3`                                 |
+| `fontSize`     | `font-size`     |             | `number`                                                                      | `16`                                |
+| `fontStyle`    | `font-style`    |             | `string`                                                                      | `'normal'`                          |
+| `fontWeight`   | `font-weight`   |             | `string`                                                                      | `'normal'`                          |
+| `gap`          | `gap`           |             | `string`                                                                      | `'100,100'`                         |
+| `height`       | `height`        |             | `number`                                                                      | `undefined`                         |
+| `image`        | `image`         |             | `string`                                                                      | `undefined`                         |
+| `offset`       | `offset`        |             | `string`                                                                      | `undefined`                         |
+| `rotate`       | `rotate`        |             | `number`                                                                      | `-22`                               |
+| `textAlign`    | `text-align`    |             | `"center" \| "end" \| "left" \| "right" \| "start"`                           | `'center'`                          |
+| `textBaseline` | `text-baseline` |             | `"alphabetic" \| "bottom" \| "hanging" \| "ideographic" \| "middle" \| "top"` | `'hanging'`                         |
+| `width`        | `width`         |             | `number`                                                                      | `undefined`                         |
+| `zIndex`       | `z-index`       |             | `number`                                                                      | `9`                                 |
 
 
 ----------------------------------------------
