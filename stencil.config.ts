@@ -7,7 +7,7 @@ export const config: Config = {
   devServer: {
     openBrowser: false,
   },
-  sourceMap: true,
+  sourceMap: false,
   // 启用动态导入
   enableCache: true,
   extras: {
