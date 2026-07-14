@@ -31,6 +31,19 @@
 | `destroy` | 销毁事件        | `CustomEvent<void>` |
 
 
+## Methods
+
+### `close() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Dependencies
 
 ### Depends on

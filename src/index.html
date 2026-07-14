@@ -52,7 +52,39 @@
 </head>
 
 <body>
-   <!-- Watermark 水印 -->
+  <!-- 表单组件 -->
+  <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
+    <h3 style="margin: 0 0 16px; font-size: 18px;">Form 表单</h3>
+    <div style="padding: 12px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
+      <h4>基础用法</h4>
+      <zane-form
+        id="ruleFormRef"
+        style="max-width: 600px"
+        status-icon
+        label-width="auto"
+      >
+        <zane-form-item label="Password" prop="pass">
+          <zane-input type="password" autocomplete="off" />
+        </zane-form-item>
+        <zane-form-item label="Confirm" prop="checkPass">
+          <zane-input
+            type="password"
+            autocomplete="off"
+          />
+        </zane-form-item>
+        <zane-form-item label="Age" prop="age">
+          <zane-input  />
+        </zane-form-item>
+        <zane-form-item>
+          <zane-button type="primary" id="ruleFormSubmit">
+            Submit
+          </zane-button>
+          <zane-button id="ruleFormReset">Reset</zane-button>
+        </zane-form-item>
+      </zane-form>
+    </div>
+  </div>
+  <!-- Watermark 水印 -->
   <div style="padding: 20px; margin-top: 24px; border: 1px solid var(--zane-border-color-extra-light);">
     <h3 style="margin: 0 0 16px; font-size: 18px;">Watermark 水印</h3>
     <div style="padding: 12px; margin-bottom: 16px; border: 1px solid var(--zane-border-color-extra-light); border-radius: 4px;">
@@ -1413,6 +1445,78 @@
         Notify.closeAll();
       });
     })();
+    // ---- start form demo ----
+
+    var formEl = document.querySelector('#ruleFormRef');
+    if (formEl) {
+      const ruleForm = {
+        pass: '123',
+        checkPass: '',
+        age: '',
+      };
+
+
+      const validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please input the password'))
+        } else {
+          if (ruleForm.checkPass !== '') {
+            if (!formEl) return
+            formEl.validateField('checkPass')
+          }
+          callback()
+        }
+      }
+      const validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please input the password again'))
+        } else if (value !== ruleForm.pass) {
+          callback(new Error("Two inputs don't match!"))
+        } else {
+          callback()
+        }
+      }
+
+      const checkAge = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('Please input the age'))
+        }
+        setTimeout(() => {
+          if (!Number.isInteger(value)) {
+            callback(new Error('Please input digits'))
+          } else {
+            if (value < 18) {
+              callback(new Error('Age must be greater than 18'))
+            } else {
+              callback()
+            }
+          }
+        }, 1000)
+      }
+      
+      const rules = {
+        pass: [{ validator: validatePass, trigger: 'blur' }],
+        checkPass: [{ validator: validatePass2, trigger: 'blur' }],
+        age: [{ validator: checkAge, trigger: 'blur' }],
+      }
+
+      formEl.model = ruleForm;
+      formEl.rules = rules;
+
+      const ruleFormSubmit = document.querySelector('#ruleFormSubmit');
+      if (ruleFormSubmit) {
+        ruleFormSubmit.addEventListener('click', () => {
+          formEl.validate((valid, fields) => {
+            if (valid) {
+              console.log('submit!');
+            } else {
+              console.log('error submit!', fields);
+              return false;
+            }
+          });
+        })
+      }
+    }
   </script>
 
 </body>

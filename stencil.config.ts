@@ -7,7 +7,7 @@ export const config: Config = {
   devServer: {
     openBrowser: false,
   },
-  sourceMap: process.env.NODE_ENV === 'production' ? false : true,
+  sourceMap: true,
   // 启用动态导入
   enableCache: true,
   extras: {

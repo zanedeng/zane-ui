@@ -9,7 +9,7 @@
 
 | Property    | Attribute    | Description | Type     | Default             |
 | ----------- | ------------ | ----------- | -------- | ------------------- |
-| `backTitle` | `back-title` |             | `string` | `undefined`         |
+| `backTitle` | `back-title` |             | `string` | `'返回'`              |
 | `content`   | `content`    |             | `string` | `''`                |
 | `icon`      | `icon`       |             | `string` | `'arrow-left-line'` |
 

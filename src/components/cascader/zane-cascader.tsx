@@ -120,9 +120,9 @@ export class ZaneCascader {
 
   @Prop() popperOptions: Props['popperOptions'] = {};
 
-  @Prop() popperBoxClass?: string;
+  @Prop() popperBoxClass: string = '';
 
-  @Prop() popperContentClass?: string;
+  @Prop() popperContentClass: string = '';
 
   @State() popperVisible?: boolean = undefined;
 

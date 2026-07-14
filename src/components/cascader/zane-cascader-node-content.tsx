@@ -2,7 +2,7 @@
 import { Component, h, Prop, Element, State } from '@stencil/core';
 import type { CascaderNode } from './node';
 import { getCascaderPanelContext } from './utils';
-import type { ReactiveObject } from '../../utils';
+import { nextFrame, type ReactiveObject } from '../../utils';
 import type { CascaderPanelContext, RenderLabel } from './types';
 import { useNamespace } from '../../hooks';
 
@@ -36,7 +36,9 @@ export class ZaneCascaderNodeContent {
   private renderLabel = () => {
     const renderEl = this.renderLabelFn?.({ node: this.node, data: this.node?.data });
     if (renderEl) {
-      this.contentRef?.appendChild(renderEl);
+      nextFrame(() => {
+        this.contentRef?.appendChild(renderEl);
+      })
       return;
     }
     return this.node?.label;

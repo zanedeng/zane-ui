@@ -25,6 +25,7 @@
 
  - [zane-autocomplete](../autocomplete)
  - [zane-avatar](../avatar)
+ - [zane-breadcrumb-item](../breadcrumb)
  - [zane-button](../button)
  - [zane-carousel](../carousel)
  - [zane-cascader](../cascader)
@@ -36,6 +37,7 @@
  - [zane-input-tag](../input-tag)
  - [zane-link](../link)
  - [zane-notification](../notification)
+ - [zane-page-header](../page-header)
  - [zane-pagination](../pagination)
  - [zane-progress](../progress)
  - [zane-rate](../rate)
@@ -54,6 +56,7 @@
 graph TD;
   zane-autocomplete --> zane-icon
   zane-avatar --> zane-icon
+  zane-breadcrumb-item --> zane-icon
   zane-button --> zane-icon
   zane-carousel --> zane-icon
   zane-cascader --> zane-icon
@@ -65,6 +68,7 @@ graph TD;
   zane-input-tag --> zane-icon
   zane-link --> zane-icon
   zane-notification --> zane-icon
+  zane-page-header --> zane-icon
   zane-pagination --> zane-icon
   zane-progress --> zane-icon
   zane-rate --> zane-icon

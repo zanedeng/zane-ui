@@ -24,7 +24,7 @@ import { getFormContext, getFormItemContext } from "./utils";
 import { getConfigProviderContext } from "../config-provider/utils";
 import { get, set, clone, castArray } from "lodash-es";
 import state from "../../global/store";
-import { hasRawParent, isFunction, nextFrame, ReactiveObject } from "../../utils";
+import { addUnit, hasRawParent, isFunction, nextFrame, ReactiveObject } from "../../utils";
 import type { RuleItem } from "async-validator";
 import AsyncValidator from "async-validator";
 import classNames from "classnames";
@@ -33,6 +33,7 @@ const ns = useNamespace("form-item");
 
 @Component({
   tag: "zane-form-item",
+  styleUrl: "zane-form-item.scss",
 })
 export class ZaneFormItem {
   @Element() el: HTMLElement | undefined;
@@ -55,9 +56,9 @@ export class ZaneFormItem {
 
   @Prop() for: string | undefined;
 
-  @Prop() inlineMessage: boolean = false;
+  @Prop() inlineMessage?: boolean;
 
-  @Prop() showMessage: boolean = false;
+  @Prop() showMessage: boolean = true;
 
   @Prop() size: ComponentSize | undefined;
 
@@ -76,8 +77,6 @@ export class ZaneFormItem {
   @State() validateMessage: string = "";
 
   @State() validateState: FormItemValidateState = "";
-
-  @State() validateEnabled: boolean = false;
 
   @State() propString: string | undefined;
 
@@ -115,6 +114,43 @@ export class ZaneFormItem {
     this.inputIds = this.inputIds.filter((listId) => listId !== id);
   };
 
+  private getNormalizedRules() {
+    const rules: FormItemRule[] = [];
+
+    if (this.rules) {
+      rules.push(...castArray(this.rules));
+    }
+
+    const formRules = this.formContext?.value.rules;
+    if (formRules && this.prop) {
+      const _rules = get<Arrayable<FormItemRule> | undefined>(
+        formRules,
+        this.prop as any
+      );
+      if (_rules) {
+        rules.push(...castArray(_rules));
+      }
+    }
+    const required = this.required;
+
+    if (required !== undefined) {
+      const requiredRules = rules
+        .map((rule, i) => [rule, i] as const)
+        .filter(([rule]) => "required" in rule);
+
+      if (requiredRules.length > 0) {
+        for (const [rule, i] of requiredRules) {
+          if (rule.required === required) continue;
+          rules[i] = { ...rule, required };
+        }
+      } else {
+        rules.push({ required });
+      }
+    }
+
+    return rules;
+  };
+
   @Method()
   async getContext() {
     return this.context;
@@ -141,6 +177,10 @@ export class ZaneFormItem {
     this.validateState = "";
     this.validateMessage = "";
     this.isResettingField = false;
+  }
+
+  private isRequired() {
+    return this.getNormalizedRules().some((rule) => rule.required);
   }
 
   private getFilteredRule = (trigger: string) => {
@@ -212,7 +252,8 @@ export class ZaneFormItem {
     }
 
     const hasCallback = isFunction(callback);
-    if (!this.validateEnabled) {
+    const validateEnabled = this.getNormalizedRules().length > 0;
+    if (!validateEnabled) {
       callback?.(false);
       return false;
     }
@@ -237,47 +278,6 @@ export class ZaneFormItem {
       });
   }
 
-  private getNormalizedRules = () => {
-    const rules: FormItemRule[] = [];
-
-    if (this.rules) {
-      rules.push(...castArray(this.rules));
-    }
-
-    const formRules = this.formContext?.value.rules;
-    if (formRules && this.prop) {
-      const _rules = get<Arrayable<FormItemRule> | undefined>(
-        formRules,
-        this.prop as any
-      );
-      if (_rules) {
-        rules.push(...castArray(_rules));
-      }
-    }
-    const required = this.required;
-
-    if (required !== undefined) {
-      const requiredRules = rules
-        .map((rule, i) => [rule, i] as const)
-        .filter(([rule]) => "required" in rule);
-
-      if (requiredRules.length > 0) {
-        for (const [rule, i] of requiredRules) {
-          if (rule.required === required) continue;
-          rules[i] = { ...rule, required };
-        }
-      } else {
-        rules.push({ required });
-      }
-    }
-
-    return rules;
-  };
-
-  private isRequired() {
-    return this.getNormalizedRules().some((rule) => rule.required);
-  }
-
   componentWillLoad() {
     this.formContext = getFormContext(this.el!);
     this.parentFormItemContext = getFormItemContext(this.el!);
@@ -291,7 +291,6 @@ export class ZaneFormItem {
       this.for ?? (this.inputIds.length === 1 ? this.inputIds[0] : undefined);
     this.isGroup = !this.labelFor && this.hasLabel;
     this.fieldValue = get(this.formContext?.value.model, this.prop as any);
-    this.validateEnabled = this.getNormalizedRules().length > 0;
     this.propString = this.prop
       ? Array.isArray(this.prop)
         ? (this.prop as string[]).join(".")
@@ -320,13 +319,14 @@ export class ZaneFormItem {
       hasLabel: this.hasLabel,
       fieldValue: this.fieldValue,
       propString: this.propString,
-      addInputId: this.addInputId,
-      removeInputId: this.removeInputId,
-      validate: this.validate,
-      resetField: this.resetField,
-      clearValidate: this.clearValidate,
+      addInputId: this.addInputId.bind(this),
+      removeInputId: this.removeInputId.bind(this),
+      validate: this.validate.bind(this),
+      resetField: this.resetField.bind(this),
+      clearValidate: this.clearValidate.bind(this),
     });
     formItemContexts.set(this.el!, this.context);
+
   }
 
   componentDidLoad() {
@@ -354,6 +354,59 @@ export class ZaneFormItem {
     this.validateState = val || "";
   }
 
+  private getContentStyle = () => {
+    const labelPosition = this.labelPosition || this.formContext?.value.labelPosition;
+    if (labelPosition === 'top' && this.formContext?.value.inline) {
+      return {};
+    }
+    if (!this.label && !this.labelWidth && this.parentFormItemContext?.value) {
+      return {};
+    }
+    const labelWidth = addUnit(this.labelWidth || this.formContext?.value.labelWidth);
+    if (!this.hasLabel) {
+      return {
+        marginLeft: labelWidth,
+      };
+    }
+    return {};
+  }
+
+  private renderLabelWrap = () => {
+    const currentLabel = `${this.label || ''}${this.formContext?.value.labelSuffix || ''}`;
+    const labelPosition = this.labelPosition || this.formContext?.value.labelPosition;
+    const labelStyle: Record<string, any> = {};
+    if (labelPosition !== 'top') {
+      const labelWidth = addUnit(this.labelWidth || this.formContext?.value.labelWidth);
+      labelStyle.width = labelWidth;
+    }
+
+    return (<label
+      id={this.labelId}
+      htmlFor={this.labelFor}
+      class={ns.e('label')}
+      style={labelStyle}
+    >
+      <slot name="label">{currentLabel}</slot>
+    </label>);
+  }
+
+  private renderDivWrap = () => {
+    const currentLabel = `${this.label || ''}${this.formContext?.value.labelSuffix || ''}`;
+    const labelPosition = this.labelPosition || this.formContext?.value.labelPosition;
+    const labelStyle: Record<string, any> = {};
+    if (labelPosition !== 'top') {
+      const labelWidth = addUnit(this.labelWidth || this.formContext?.value.labelWidth);
+      labelStyle.width = labelWidth;
+    }
+    return (<div
+      id={this.labelId}
+      class={ns.e('label')}
+      style={labelStyle}
+    >
+      <slot name="label">{currentLabel}</slot>
+    </div>);
+  }
+
   render() {
     const formItemClasses = classNames(
       ns.b(),
@@ -371,13 +424,54 @@ export class ZaneFormItem {
         [ns.m(`label-${this.labelPosition}`)]: this.labelPosition,
       }
     );
+
+    const labelPosition = this.labelPosition || this.formContext?.value.labelPosition;
+
+    const labelStyle: Record<string, any> = {};
+    if (labelPosition !== 'top') {
+      const labelWidth = addUnit(this.labelWidth || this.formContext?.value.labelWidth);
+      labelStyle.width = labelWidth;
+    }
+
+    const contentStyle: Record<string, any> = this.getContentStyle();
+
+    const shouldShowError = this.validateState === 'error' && this.showMessage && (this.formContext?.value.showMessage ?? true);
+
+    const inlineMessage = this.inlineMessage 
+      ? this.inlineMessage
+      : this.formContext?.value.inlineMessage || false;
+
     return (
       <div
         ref={(el) => (this.formItemRef = el)}
         class={formItemClasses}
         role={this.isGroup ? "group" : undefined}
         ariaLabelledby={this.isGroup ? this.labelId : undefined}
-      ></div>
+      >
+        <zane-form-label-wrap
+          isAutoWidth={labelStyle.width === 'auto'}
+          updateAll={this.formContext?.value.labelWidth === 'auto'}
+        >
+          {
+            this.hasLabel && (
+              this.labelFor ? this.renderLabelWrap() : this.renderDivWrap()
+            )
+          }
+        </zane-form-label-wrap>
+        <div class={ns.e('content')} style={contentStyle}>
+          <slot></slot>
+          {
+            shouldShowError && (<div class={classNames(
+              ns.e('error'), 
+              {
+                [ns.em('error', 'inline')]: inlineMessage
+              }
+            )}>
+              { this.validateMessage}
+            </div>)
+          }
+        </div>
+      </div>
     );
   }
 }

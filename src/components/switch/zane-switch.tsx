@@ -18,33 +18,33 @@ const ns = useNamespace('switch');
   styleUrl: 'zane-switch.scss'
 })
 export class ZaneSwitch {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ attribute: 'id' }) zId: string;
+  @Prop({ attribute: 'id' }) zId?: string;
 
   @Prop({ mutable: true }) value: boolean | string | number = false;
 
-  @Prop() disabled: boolean = undefined;
+  @Prop() disabled?: boolean = undefined;
 
-  @Prop() loading: boolean;
+  @Prop() loading: boolean = false;
 
-  @Prop() inlinePrompt: boolean;
+  @Prop() inlinePrompt: boolean = false;
 
-  @Prop() size: ComponentSize;
+  @Prop() size: ComponentSize = '';
 
   @Prop() activeText: string = '';
 
   @Prop() activeValue: boolean | string | number = true;
 
-  @Prop() activeIcon: string;
+  @Prop() activeIcon?: string;
 
-  @Prop() activeActionIcon: string;
+  @Prop() activeActionIcon?: string;
 
   @Prop() inactiveText: string = '';
 
-  @Prop() inactiveIcon: string;
+  @Prop() inactiveIcon?: string;
 
-  @Prop() inactiveActionIcon: string;
+  @Prop() inactiveActionIcon?: string;
 
   @Prop() inactiveValue: boolean | string | number = false;
 
@@ -54,19 +54,19 @@ export class ZaneSwitch {
 
   @Prop() width: string | number = '';
 
-  @Prop() beforeChange: () => Promise<boolean> | boolean;
+  @Prop() beforeChange?: () => Promise<boolean> | boolean;
 
-  @Prop({ attribute: 'tabindex' }) zTabindex: number;
+  @Prop({ attribute: 'tabindex' }) zTabindex: number = -1;
 
-  @Prop() ariaLabel: string;
+  @Prop() ariaLabel?: string;
 
   @Event({ eventName: 'zChange', bubbles: false })
-  changeEvent: EventEmitter<boolean | string | number>;
+  changeEvent?: EventEmitter<boolean | string | number>;
 
   @Event({ eventName: 'zInput', bubbles: false })
-  inputEvent: EventEmitter<boolean | string | number>;
+  inputEvent?: EventEmitter<boolean | string | number>;
 
-  @State() inputId: string;
+  @State() inputId?: string;
 
   @State() switchDisabled: boolean = false;
 
@@ -74,21 +74,21 @@ export class ZaneSwitch {
 
   @State() isControlled: boolean = false;
 
-  @State() actualValue: boolean | string | number;
+  @State() actualValue?: boolean | string | number;
 
-  @State() checked: boolean;
+  @State() checked: boolean = false;
 
-  private formContext: ReactiveObject<FormContext>;
+  private formContext?: ReactiveObject<FormContext>;
 
-  private formItemContext: ReactiveObject<FormItemContext>;
+  private formItemContext?: ReactiveObject<FormItemContext>;
 
-  private configProviderContext: ReactiveObject<ConfigProviderContext>;
+  private configProviderContext?: ReactiveObject<ConfigProviderContext>;
 
-  private inputRef: HTMLInputElement;
+  private inputRef?: HTMLInputElement;
 
-  private hasInactiveSlot: boolean;
+  private hasInactiveSlot: boolean = false;
 
-  private hasActiveSlot: boolean;
+  private hasActiveSlot: boolean = false;
 
   @Watch('zId')
   handleWatchId() {
@@ -158,22 +158,22 @@ export class ZaneSwitch {
 
     this.isControlled = this.value !== false;
 
-    if (![this.activeValue, this.inactiveValue].includes(this.actualValue)) {
+    if (![this.activeValue, this.inactiveValue].includes(this.actualValue!)) {
       this.value = this.inactiveValue;
-      this.changeEvent.emit(this.inactiveValue);
-      this.inputEvent.emit(this.inactiveValue);
+      this.changeEvent?.emit(this.inactiveValue);
+      this.inputEvent?.emit(this.inactiveValue);
     }
   }
 
   componentDidLoad() {
-    this.inputRef.checked = this.checked;
+    this.inputRef!.checked = this.checked;
   }
 
   private handleChange = () => {
     const val = this.checked ? this.inactiveValue : this.activeValue;
     this.value = val;
-    this.changeEvent.emit(val);
-    this.inputEvent.emit(val);
+    this.changeEvent?.emit(val);
+    this.inputEvent?.emit(val);
     nextFrame(() => {
       this.inputRef!.checked = this.checked;
     });

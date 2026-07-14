@@ -93,18 +93,22 @@ export class ZaneForm {
   };
 
   private registerLabelWidth = (val: number, oldVal: number) => {
+    const arr = [...this.potentialLabelWidthArr];
     if (val && oldVal) {
       const index = this.getLabelWidthIndex(oldVal);
-      this.potentialLabelWidthArr.splice(index, 1, val);
+      arr.splice(index, 1, val);
     } else if (val) {
-      this.potentialLabelWidthArr.push(val);
+      arr.push(val);
     }
+    this.potentialLabelWidthArr = arr;
   };
 
   private deregisterLabelWidth = (val: number) => {
     const index = this.getLabelWidthIndex(val);
     if (index > -1) {
-      this.potentialLabelWidthArr.splice(index, 1);
+      const arr = [...this.potentialLabelWidthArr];
+      arr.splice(index, 1);
+      this.potentialLabelWidthArr = arr;
     }
   };
 
@@ -183,6 +187,13 @@ export class ZaneForm {
     }
   }
 
+  @Watch('potentialLabelWidthArr')
+  onPotentialLabelWidthArrChange() {
+    this.context!.value.autoLabelWidth = this.potentialLabelWidthArr.length
+      ? Math.max(...this.potentialLabelWidthArr) + 'px'
+      : '0';
+  }
+
   @Method()
   async getContext() {
     return this.context;
@@ -245,7 +256,7 @@ export class ZaneForm {
   private doValidateField = async (
     props: Arrayable<FormItemProp> = []
   ): Promise<boolean> => {
-    if (this.isValidatable()) {
+    if (!this.isValidatable()) {
       return false;
     }
 

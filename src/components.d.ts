@@ -559,8 +559,14 @@ export namespace Components {
     | "right"
     | "top"
     | "top-start";
-        "popperBoxClass"?: string;
-        "popperContentClass"?: string;
+        /**
+          * @default ''
+         */
+        "popperBoxClass": string;
+        /**
+          * @default ''
+         */
+        "popperContentClass": string;
         /**
           * @default {}
          */
@@ -1132,10 +1138,7 @@ export namespace Components {
         "error": string | undefined;
         "for": string | undefined;
         "getContext": () => Promise<ReactiveObject<FormItemContext>>;
-        /**
-          * @default false
-         */
-        "inlineMessage": boolean;
+        "inlineMessage"?: boolean;
         "label": string | undefined;
         /**
           * @default ""
@@ -1150,7 +1153,7 @@ export namespace Components {
         "resetField": () => Promise<void>;
         "rules": Arrayable<FormItemRule> | undefined;
         /**
-          * @default false
+          * @default true
          */
         "showMessage": boolean;
         "size": ComponentSize | undefined;
@@ -2577,8 +2580,8 @@ export namespace Components {
         "uuid": string;
     }
     interface ZaneSwitch {
-        "activeActionIcon": string;
-        "activeIcon": string;
+        "activeActionIcon"?: string;
+        "activeIcon"?: string;
         /**
           * @default ''
          */
@@ -2587,14 +2590,14 @@ export namespace Components {
           * @default true
          */
         "activeValue": boolean | string | number;
-        "ariaLabel": string;
-        "beforeChange": () => Promise<boolean> | boolean;
+        "ariaLabel"?: string;
+        "beforeChange"?: () => Promise<boolean> | boolean;
         /**
           * @default undefined
          */
-        "disabled": boolean;
-        "inactiveActionIcon": string;
-        "inactiveIcon": string;
+        "disabled"?: boolean;
+        "inactiveActionIcon"?: string;
+        "inactiveIcon"?: string;
         /**
           * @default ''
          */
@@ -2603,13 +2606,22 @@ export namespace Components {
           * @default false
          */
         "inactiveValue": boolean | string | number;
+        /**
+          * @default false
+         */
         "inlinePrompt": boolean;
         "isChecked": () => Promise<boolean>;
+        /**
+          * @default false
+         */
         "loading": boolean;
         /**
           * @default ''
          */
         "name": string;
+        /**
+          * @default ''
+         */
         "size": ComponentSize;
         /**
           * @default true
@@ -2624,7 +2636,10 @@ export namespace Components {
          */
         "width": string | number;
         "zFocus": () => Promise<void>;
-        "zId": string;
+        "zId"?: string;
+        /**
+          * @default -1
+         */
         "zTabindex": number;
     }
     interface ZaneTag {
@@ -5834,7 +5849,13 @@ declare namespace LocalJSX {
     | "right"
     | "top"
     | "top-start";
+        /**
+          * @default ''
+         */
         "popperBoxClass"?: string;
+        /**
+          * @default ''
+         */
         "popperContentClass"?: string;
         /**
           * @default {}
@@ -6406,9 +6427,6 @@ declare namespace LocalJSX {
     interface ZaneFormItem {
         "error"?: string | undefined;
         "for"?: string | undefined;
-        /**
-          * @default false
-         */
         "inlineMessage"?: boolean;
         "label"?: string | undefined;
         /**
@@ -6423,7 +6441,7 @@ declare namespace LocalJSX {
         "required"?: boolean | undefined;
         "rules"?: Arrayable<FormItemRule> | undefined;
         /**
-          * @default false
+          * @default true
          */
         "showMessage"?: boolean;
         "size"?: ComponentSize | undefined;
@@ -7954,7 +7972,13 @@ declare namespace LocalJSX {
           * @default false
          */
         "inactiveValue"?: boolean | string | number;
+        /**
+          * @default false
+         */
         "inlinePrompt"?: boolean;
+        /**
+          * @default false
+         */
         "loading"?: boolean;
         /**
           * @default ''
@@ -7962,6 +7986,9 @@ declare namespace LocalJSX {
         "name"?: string;
         "onZChange"?: (event: ZaneSwitchCustomEvent<boolean | string | number>) => void;
         "onZInput"?: (event: ZaneSwitchCustomEvent<boolean | string | number>) => void;
+        /**
+          * @default ''
+         */
         "size"?: ComponentSize;
         /**
           * @default true
@@ -7976,6 +8003,9 @@ declare namespace LocalJSX {
          */
         "width"?: string | number;
         "zId"?: string;
+        /**
+          * @default -1
+         */
         "zTabindex"?: number;
     }
     interface ZaneTag {
